@@ -1,180 +1,165 @@
-// Ejercicio1.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+// M5_Juego.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
 //
 
 #include <iostream>
+#include <iostream>
+#include<time.h>
 
 using namespace std;
 
-//Atributos del enemigo
-int enemyHP1 = 100;
-string enemyName1 = "Zombie";
-bool enemyIsAlive1 = true;
 
-//Atributos del enemigo 2
-int enemyHP2 = 150;
-string enemyName2 = "Creeper";
-bool enemyIsAlive2 = true;
+//Atributos del Enemigo
+int enemyHP = 2500 + rand() % (2700 - 2500);
+int enemydamage = 1500 + rand() % (2500 - 1500);
+string Enemyname = "Malo";
+bool Vivo1 = true;
+int hitEnemy = 1;
 
-//Atributos del personaje
-int heroHP = 200;
-int heroDamage;
-string heroName;
-bool heroIsAlive = true;
 
-//Atributos del juego
+//Atributos del Enemigo 2
+int enemyHP2 = 2000 + rand() % (2300 - 2000);
+int enemydamage2 = 1500 + rand() % (2500 - 1500);
+string Enemyname2 = "Malo2";
+bool Vivo3 = true;
+int hitEnemy2 = 2;
+
+//Atributos del Héroe
+string heroname;
+int herodamage;
+int attacktype = 0;
+int attacktype1 = 1300 + rand() % (2500 - 1300);
+int attacktype2 = 2000 + rand() % (3000 - 2000);
+int attacktype3 = 4000 + rand() % (5000 - 4000);
+int heroHP = 7000 + rand() % (10000 - 7000);
+bool Vivo2 = true;
+
+//ATRIBUTOS DEL JUEGO
+int attacktype;
+int limitattack1 = 5;
+int limitattack2 = 10;
 int enemyChoosed = 0;
-int magicPoints = 2;
-int sopapoValue = 10;
-int espadazoValue = 30;
-int magicValue = 50;
+int EnemyChoose = 0;
 
 void gameStart() {
-    cout << "El enemigo " << enemyName1 << " ha aparecido\n";
-    cout << "Como se llama el heroe?\n";
-    cin >> heroName;
-    cout << "El nombre del heroe es " << heroName << "\n";
+    cout << "El enemigo " << Enemyname << " acaba de aparecer y tiene " << enemyHP << " de vida" "\n";
+    cout << "Inserta el nombre del heroe que lo va a derrotar\n";
+    cin >> heroname;
+    cout << "El nombre del héroe es " << heroname << "\n";
 }
-
 
 bool checkEnemyStatus1() {
-    if (enemyHP1 <= 0) {
-        cout << "Te has cargado al enemigo " << enemyName1 << " \n";
-        enemyHP1 = 0;
-        return false;
+        if (enemyHP <= 0) {
+            cout << "Has derrotado al enemigo 1 " << heroname << "Bien hecho\n";
+            return false;
+
+        }
+        else {
+            cout << "El enemigo le queda " << enemyHP << "puntos de salud." << endl;
+        }
     }
-    else {
-        cout << "El enemigo " << enemyName1 << " tiene " << enemyHP1 << " puntos de vida\n";
-        return true;
-    }
-}
 
 bool checkEnemyStatus2() {
+
     if (enemyHP2 <= 0) {
-        cout << "Te has cargado al enemigo " << enemyName2 << " \n";
-        enemyHP2 = 0;
+        cout << "Has derrotado al enemigo 2 " << heroname << "Bien hecho\n";
         return false;
+
     }
     else {
-        cout << "El enemigo " << enemyName2 << " tiene " << enemyHP2 << " puntos de vida\n";
-        return true;
+        cout << "El enemigo le queda " << enemyHP2 << "puntos de salud." << endl;
     }
 }
 
-int chooseEnemy(){
-    int enemyChoose = 0;
-    while (enemyChoose != 1 && enemyChoose != 2){
-        cout << "A que enemigo quieres atacar? \n";
-        if(enemyIsAlive1){
-            cout << "1.- "<<enemyName1<< "\n";
+int TypeAttack() {
+    attacktype = 0;
+
+    while (attacktype != 1 && attacktype != 3) {
+
+        if (attacktype == 1) {
+            attacktype = attacktype1;
+            enemyHP = enemyHP - herodamage;
+            cout << "A que enemigo le quieres dar";
+            cin >> hitEnemy;
         }
-        if(enemyIsAlive2) {
-            cout << "2.- "<<enemyName2<< "\n";
+        if (attacktype == 2) {
+            attacktype = attacktype2;
+            enemyHP = enemyHP - herodamage;
+            cout << "Te quedan" << (limitattack1 - 1) << " Ataques Igneos";
+            cout << "A que enemigo le quieres dar";
+            cin >> hitEnemy;
+
         }
-        cin >> enemyChoose;
-        if (enemyChoose <=0 || enemyChoose >2){
-            cout << "La opcion elegida no es correcta. Por favor, elige una opcion valida. \n";
+        if (limitattack1 == 0) {
+            cout << "Has pasado tu limite de movimientos y no golpeas al enemigo" << endl;
+            // Continuar programa
+            continue;
         }
-        if(!enemyIsAlive1 && enemyChoose==1){
-            cout << "El enemigo "<< enemyName1<< " ya esta muerto. Por favor, elige un enemigo que todavia este vivo." " \n";
-            enemyChoose =0;
+        if (attacktype == 3) {
+            attacktype = attacktype3;
+            cout << "Te quedan " << (limitattack2 - 1) << " Balas de Plata";
+            cout << "A que enemigo le quieres dar";
+            cin >> hitEnemy;
+
         }
-        if(!enemyIsAlive2 && enemyChoose==2){
-            cout << "El enemigo "<< enemyName2<< " ya esta muerto. Por favor, elige un enemigo que todavia este vivo." " \n";
-            enemyChoose =0;
+        if (limitattack2 == 0) {
+            cout << "Has pasado tu limite de movimientos y no golpeas al enemigo" << endl;
+            // Continuar programa
+            continue;
         }
     }
-    return enemyChoose;
 }
-
-
-int chooseAttack(){
-    int attackChoose = 0;
-    while (attackChoose != 1 && attackChoose != 2 && attackChoose != 3){
-        cout << "Que ataque quieres usar? \n";
-        cout << "1.- Espadazo \n";
-        cout << "2.- Sopapo \n";
-        if(magicPoints > 0) {
-            cout << "3.- Magia\n";
-        }
-        cin >> attackChoose;
-        if (attackChoose <=0 || attackChoose >3){
-            cout << "El ataque seleccionado no es correcto. Por favor, elige una opcion valida. \n";
-        }
-        if(attackChoose ==3){
-            if(magicPoints >0){
-                magicPoints--;
-            }else{
-                attackChoose =0;
-                cout << "No te queda magia. Por favor selecciona un ataque que puedas usar. \n";
+int ChooseEnemy() {
+    while (EnemyChoose != 1 && EnemyChoose != 2) {
+        cout << "A que enemigo quieres atacar= \n";
+        cin >> EnemyChoose;
+            if (Vivo1) {
+                cout << "1.- " << Enemyname << " \n";
             }
+        if (Vivo2) {
+            cout << "2.- " << Enemyname2 << " \n";
         }
-    }
-    if(attackChoose == 1){
-        return espadazoValue;
-    }else if(attackChoose == 2){
-        return sopapoValue;
-    }else{
-        return magicValue;
-    }
-}
-
-
-int heroAttackEnemy1(int damage) {
-    cout << "Atacas al enemigo " << enemyName1 << " y le haces un danyo de " << damage << " \n";
-    return enemyHP1 - damage;
-}
-
-int heroAttackEnemy2(int damage) {
-    cout << "Atacas al enemigo " << enemyName2 << " y le haces un danyo de " << damage << " \n";
-    return enemyHP2 - damage;
-}
-
-void enemyAttack1(int damage) {
-    heroHP = heroHP - damage;
-    if(heroHP > 0){
-        cout << "El enemigo " << enemyName1 << " te ha atacado y te quedan " << heroHP << " puntos de vida\n";
-    }else{
-        cout << "El enemigo " << enemyName1 << " te ha atacado y te ha matado. El mundo esta condenado. \n";
-        heroIsAlive = false;
+        cin >> EnemyChoose;
+        if (EnemyChoose <= 0 || EnemyChoose > 2) {
+            cout << "La opcion no es correcta. Por favor, pon una opcion viable. \n";
+        }
+        if (!Vivo1 && EnemyChoose = 1) {
+            cout << "El enemigo " << Enemyname << "Ya esta muerto. Porfavor, elige a otro enemigo que este vivo, y deja de martilizarlo." " \n";
+        }
+        if (!Vivo2 && EnemyChoose = 2) {
+            cout << "El enemigo " << Enemyname2 << "Ya esta muerto. Porfavor, elige a otro enemigo que este vivo, y deja de martilizarlo." " \n";
+        }
+        return EnemyChoose;
     }
 }
-
-void enemyAttack2(int damage) {
-    heroHP = heroHP - damage;
-    if(heroHP > 0){
-        cout << "El enemigo " << enemyName2 << " te ha atacado y te quedan " << heroHP << " puntos de vida\n";
-    }else{
-        cout << "El enemigo " << enemyName2 << " te ha atacado y te ha matado. El mundo esta condenado. \n";
-        heroIsAlive = false;
-    }
-}
-
-
 int main()
 {
     gameStart();
-    while(heroIsAlive && (enemyIsAlive1 || enemyIsAlive2)){
-        //ELEGIMOS ENEMIGO AL QUE ATACAR
-        enemyChoosed = chooseEnemy();
-        //ELEGIMOS ATAQUE Y CAPTURAMOS EL VALOR DEL DANYO QUE HAREMOS
-        heroDamage = chooseAttack();
+    // 
+    enemyChoosed = ChooseEnemy();
+        // Tipo de Ataque, y daño
 
-        if (enemyChoosed ==1){
-            //ATACAMOS AL ENEMIGO 1
-            enemyHP1 = heroAttackEnemy1(heroDamage);
-            enemyIsAlive1 = checkEnemyStatus1();
-        }else{
-            //ATACAMOS AL ENEMIGO 2
-            enemyHP2 = heroAttackEnemy2(heroDamage);
-            enemyIsAlive2 = checkEnemyStatus2();
+        while (Vivo1 == true && Vivo2 == true && Vivo3 == true) {
+            // Tipo de Ataque, y daño
+            
+            TypeAttack();
+            herodamage = attacktype;
+            ChooseEnemy();
+
+            if (enemyChoosed == 1) {
+                enemyHP = attacktype1 - enemyHP;
+                Vivo1 = checkEnemyStatus1();
+            }
+            else {
+                enemyHP2 = attacktype1 - enemyHP2;
+                Vivo3 = checkEnemyStatus2();
+
+                if (Vivo1 && Vivo2) {
+                    heroHP = enemydamage - heroHP;
+                }
+                if (Vivo3 && Vivo2) {
+                    heroHP = enemydamage2 - heroHP;
+                }
+
+            }
         }
-        //ATACA EL ENEMIGO 1 SI ESTÁ VIVO Y EL HÉROE TAMBIÉN
-        if (enemyIsAlive1 && heroIsAlive) {
-            enemyAttack1(30 + rand()%20);
-        }
-        //ATACA EL ENEMIGO 2 SI ESTÁ VIVO Y EL HÉROE TAMBIÉN
-        if (enemyIsAlive2 && heroIsAlive) {
-            enemyAttack2(30 + rand()%20);
-        }
-    }
 }
